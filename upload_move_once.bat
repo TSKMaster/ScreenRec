@@ -12,6 +12,7 @@ if not defined RCLONE_TRANSFERS set "RCLONE_TRANSFERS=4"
 if not defined RCLONE_CHECKERS set "RCLONE_CHECKERS=4"
 if not defined RCLONE_RETRIES set "RCLONE_RETRIES=10"
 if not defined RCLONE_LOW_LEVEL_RETRIES set "RCLONE_LOW_LEVEL_RETRIES=10"
+if not defined CLEAN_EMPTY_DIRS set "CLEAN_EMPTY_DIRS=1"
 if not defined RCLONE_EXE set "RCLONE_EXE=%SCRIPT_DIR%Rclone\rclone.exe"
 if not defined RCLONE_CONFIG set "RCLONE_CONFIG=%SCRIPT_DIR%Rclone\rclone.conf"
 
@@ -59,6 +60,19 @@ if exist "%RCLONE_CONFIG%" (
 if errorlevel 1 (
   echo [WARN] rclone move finished with errors. See log: %LOGFILE%
   exit /b 1
+)
+
+if "%CLEAN_EMPTY_DIRS%"=="1" (
+  powershell -NoProfile -Command ^
+    "$src='%SRCDIR%'; $logs='%LOGDIR%';" ^
+    "Get-ChildItem -Path $src -Directory -Recurse |" ^
+    "Sort-Object FullName -Descending |" ^
+    "Where-Object { $_.FullName -ne $logs } |" ^
+    "ForEach-Object {" ^
+    "  if (-not (Get-ChildItem -LiteralPath $_.FullName -Force | Select-Object -First 1)) {" ^
+    "    Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue" ^
+    "  }" ^
+    "}"
 )
 
 endlocal
