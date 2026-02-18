@@ -1,0 +1,10 @@
+﻿# Secrets
+Rclone/rclone.conf
+
+# Optional local binaries (keep repo lightweight)
+ffmpeg/
+Rclone/rclone.exe
+rclone-v*.zip
+
+# Runtime output
+*.log
