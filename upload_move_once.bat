@@ -13,6 +13,7 @@ if not defined RCLONE_CHECKERS set "RCLONE_CHECKERS=4"
 if not defined RCLONE_RETRIES set "RCLONE_RETRIES=10"
 if not defined RCLONE_LOW_LEVEL_RETRIES set "RCLONE_LOW_LEVEL_RETRIES=10"
 if not defined CLEAN_EMPTY_DIRS set "CLEAN_EMPTY_DIRS=1"
+if not defined LOG_RETENTION_DAYS set "LOG_RETENTION_DAYS=14"
 if not defined RCLONE_EXE set "RCLONE_EXE=%SCRIPT_DIR%Rclone\rclone.exe"
 if not defined RCLONE_CONFIG set "RCLONE_CONFIG=%SCRIPT_DIR%Rclone\rclone.conf"
 
@@ -73,6 +74,14 @@ if "%CLEAN_EMPTY_DIRS%"=="1" (
     "    Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue" ^
     "  }" ^
     "}"
+)
+
+if %LOG_RETENTION_DAYS% GTR 0 (
+  powershell -NoProfile -Command ^
+    "$limit=(Get-Date).AddDays(-%LOG_RETENTION_DAYS%);" ^
+    "Get-ChildItem -Path '%LOGDIR%' -Filter 'rclone_move_*.log' -File -ErrorAction SilentlyContinue |" ^
+    "Where-Object { $_.LastWriteTime -lt $limit } |" ^
+    "Remove-Item -Force -ErrorAction SilentlyContinue"
 )
 
 endlocal

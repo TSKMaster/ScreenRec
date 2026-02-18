@@ -12,6 +12,7 @@ set UPLOAD_MIN_AGE=3m
 set UPLOAD_INTERVAL_SEC=120
 set START_AFTER_HHMM=1700
 set CLEAN_EMPTY_DIRS=1
+set LOG_RETENTION_DAYS=14
 
 REM Video encoding.
 REM Portable ffmpeg inside project folder (recommended):
@@ -21,6 +22,7 @@ set DRAW_MOUSE=1
 set SEGMENT_SECONDS=60
 set X264_PRESET=veryfast
 set VIDEO_CRF=27
+set MIN_FREE_GB=5
 
 REM Audio capture.
 REM Leave AUDIO_DEVICE empty to record video only.
