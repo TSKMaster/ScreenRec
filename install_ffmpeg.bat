@@ -4,7 +4,8 @@ setlocal
 
 set "SCRIPT_DIR=%~dp0"
 set "FFMPEG_DIR=%SCRIPT_DIR%ffmpeg"
-set "FFMPEG_EXE=%FFMPEG_DIR%\ffmpeg.exe"
+set "FFMPEG_BIN_DIR=%FFMPEG_DIR%\bin"
+set "FFMPEG_EXE=%FFMPEG_BIN_DIR%\ffmpeg.exe"
 
 if exist "%FFMPEG_EXE%" (
   echo [ OK ] ffmpeg already exists: %FFMPEG_EXE%
@@ -32,7 +33,7 @@ if errorlevel 1 (
   exit /b 1
 )
 
-if not exist "%FFMPEG_DIR%" mkdir "%FFMPEG_DIR%"
+if not exist "%FFMPEG_BIN_DIR%" mkdir "%FFMPEG_BIN_DIR%"
 for /f "delims=" %%P in ('where ffmpeg') do (
   copy /y "%%P" "%FFMPEG_EXE%" >nul
   goto copied

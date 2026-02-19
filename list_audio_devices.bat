@@ -4,7 +4,7 @@ chcp 65001 >nul
 setlocal
 set "SCRIPT_DIR=%~dp0"
 if exist "%SCRIPT_DIR%config.bat" call "%SCRIPT_DIR%config.bat"
-if not defined FFMPEG_EXE set "FFMPEG_EXE=%SCRIPT_DIR%ffmpeg\ffmpeg.exe"
+if not defined FFMPEG_EXE set "FFMPEG_EXE=%SCRIPT_DIR%ffmpeg\bin\ffmpeg.exe"
 
 set "FFMPEG_CMD="
 if exist "%FFMPEG_EXE%" (

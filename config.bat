@@ -15,6 +15,7 @@ set CLEAN_EMPTY_DIRS=1
 set LOG_RETENTION_DAYS=14
 
 REM Video encoding.
+set "FFMPEG_EXE=%~dp0ffmpeg\bin\ffmpeg.exe"
 set VIDEO_FRAMERATE=15
 set DRAW_MOUSE=1
 set SEGMENT_SECONDS=60

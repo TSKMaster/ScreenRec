@@ -14,8 +14,8 @@
   - `Rclone\rclone.exe`
   - `Rclone\rclone.conf`
 - Папка `ffmpeg`:
-  - `ffmpeg\ffmpeg.exe`
-  - (опционально) `ffmpeg\ffprobe.exe`
+  - `ffmpeg\bin\ffmpeg.exe`
+  - (опционально) `ffmpeg\bin\ffprobe.exe`
 
 ## 3. Быстрая настройка
 1. Открой `config.bat` и проверь ключевые параметры:

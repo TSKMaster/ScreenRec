@@ -16,7 +16,7 @@ set LOG_RETENTION_DAYS=14
 
 REM Video encoding.
 REM Portable ffmpeg inside project folder (recommended):
-REM set "FFMPEG_EXE=%~dp0ffmpeg\ffmpeg.exe"
+REM set "FFMPEG_EXE=%~dp0ffmpeg\bin\ffmpeg.exe"
 set VIDEO_FRAMERATE=15
 set DRAW_MOUSE=1
 set SEGMENT_SECONDS=60

@@ -6,7 +6,7 @@ set "SCRIPT_DIR=%~dp0"
 if exist "%SCRIPT_DIR%config.bat" call "%SCRIPT_DIR%config.bat"
 
 if not defined OUTDIR set "OUTDIR=C:\rec"
-if not defined FFMPEG_EXE set "FFMPEG_EXE=%SCRIPT_DIR%ffmpeg\ffmpeg.exe"
+if not defined FFMPEG_EXE set "FFMPEG_EXE=%SCRIPT_DIR%ffmpeg\bin\ffmpeg.exe"
 if not defined VIDEO_FRAMERATE set "VIDEO_FRAMERATE=15"
 if not defined DRAW_MOUSE set "DRAW_MOUSE=0"
 if not defined SEGMENT_SECONDS set "SEGMENT_SECONDS=60"
@@ -24,7 +24,7 @@ if exist "%FFMPEG_EXE%" (
   where ffmpeg >nul 2>&1
   if errorlevel 1 (
     echo [ERROR] ffmpeg not found: "%FFMPEG_EXE%" and not in PATH.
-    echo Put ffmpeg.exe in ffmpeg\ or install ffmpeg.
+    echo Put ffmpeg.exe in ffmpeg\bin\ or install ffmpeg.
     if "%PAUSE_ON_EXIT%"=="1" pause
     exit /b 1
   )

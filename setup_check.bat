@@ -7,7 +7,7 @@ if exist "%SCRIPT_DIR%config.bat" call "%SCRIPT_DIR%config.bat"
 
 if not defined OUTDIR set "OUTDIR=C:\rec"
 if not defined REMOTE_BASE set "REMOTE_BASE=nas:records"
-if not defined FFMPEG_EXE set "FFMPEG_EXE=%SCRIPT_DIR%ffmpeg\ffmpeg.exe"
+if not defined FFMPEG_EXE set "FFMPEG_EXE=%SCRIPT_DIR%ffmpeg\bin\ffmpeg.exe"
 if not defined RCLONE_EXE set "RCLONE_EXE=%SCRIPT_DIR%Rclone\rclone.exe"
 if not defined RCLONE_CONFIG set "RCLONE_CONFIG=%SCRIPT_DIR%Rclone\rclone.conf"
 
