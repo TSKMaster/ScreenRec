@@ -20,7 +20,7 @@
 ## 3. Быстрая настройка
 1. Открой `config.bat` и проверь ключевые параметры:
    - `OUTDIR` — куда писать записи (например `C:\rec`)
-   - `REMOTE_BASE` — путь на NAS (например `nas:records`)
+   - `REMOTE_BASE` — путь на NAS (например `nas:/share/records`)
    - `AUDIO_DEVICE` — устройство звука (или пусто для видео без звука)
    - `VIDEO_FRAMERATE`, `DRAW_MOUSE`
    - `MIN_FREE_GB` — минимально свободное место перед стартом записи

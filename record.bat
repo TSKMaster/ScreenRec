@@ -46,17 +46,20 @@ for /f "delims=" %%i in ('powershell -NoProfile -Command "Get-Date -Format ''yyy
 for /f %%i in ('powershell -NoProfile -Command "[DateTimeOffset]::Now.ToUnixTimeSeconds()"') do set "START_EPOCH=%%i"
 
 set "FREE_GB="
-for /f %%i in ('powershell -NoProfile -Command "$p='%OUTDIR%'; try { $root=[System.IO.Path]::GetPathRoot($p); if (-not $root) { '' } else { $id=($root -replace '\\\\$',''); $d=Get-CimInstance Win32_LogicalDisk -Filter ('DeviceID=''''+$id+'''''); if($d){ [int]([math]::Floor($d.FreeSpace/1GB)) } } } catch { '' }"') do set "FREE_GB=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$p='%OUTDIR%'; try { $root=[System.IO.Path]::GetPathRoot($p); if ($root) { $di=New-Object System.IO.DriveInfo($root); [int]([math]::Floor($di.AvailableFreeSpace/1GB)) } } catch { '' }"') do set "FREE_GB=%%i"
 
-if defined FREE_GB (
-  if %FREE_GB% LSS %MIN_FREE_GB% (
-    echo [ERROR] Low disk space: %FREE_GB% GB free, required at least %MIN_FREE_GB% GB.
-    echo [%START_TS%] START_BLOCKED reason=LOW_DISK free_gb=%FREE_GB% min_free_gb=%MIN_FREE_GB% outdir=%OUTDIR%>>"%RECORD_SESSION_LOG%"
+set "FREE_GB_NUM="
+echo(%FREE_GB%| findstr /R "^[0-9][0-9]*$" >nul && set "FREE_GB_NUM=%FREE_GB%"
+
+if defined FREE_GB_NUM (
+  if %FREE_GB_NUM% LSS %MIN_FREE_GB% (
+    echo [ERROR] Low disk space: %FREE_GB_NUM% GB free, required at least %MIN_FREE_GB% GB.
+    echo [%START_TS%] START_BLOCKED reason=LOW_DISK free_gb=%FREE_GB_NUM% min_free_gb=%MIN_FREE_GB% outdir=%OUTDIR%>>"%RECORD_SESSION_LOG%"
     if "%PAUSE_ON_EXIT%"=="1" pause
     exit /b 2
   )
 ) else (
-  echo [WARN] Could not determine free disk space for OUTDIR.
+  echo [WARN] Could not determine free disk space for OUTDIR. Disk check skipped.
 )
 
 echo.

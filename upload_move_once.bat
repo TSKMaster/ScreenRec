@@ -42,8 +42,11 @@ if exist "%RCLONE_CONFIG%" (
   "%RCLONE_CMD%" --config "%RCLONE_CONFIG%" mkdir "%REMOTE%" >nul 2>&1
   "%RCLONE_CMD%" --config "%RCLONE_CONFIG%" move "%SRCDIR%" "%REMOTE%" ^
     --min-age %UPLOAD_MIN_AGE% ^
-    --include "*/**.mkv" ^
-    --exclude "logs/**" ^
+    --filter "- /logs/**" ^
+    --filter "+ *.mkv" ^
+    --filter "+ */" ^
+    --filter "+ **/*.mkv" ^
+    --filter "- *" ^
     --retries %RCLONE_RETRIES% --low-level-retries %RCLONE_LOW_LEVEL_RETRIES% ^
     --transfers %RCLONE_TRANSFERS% --checkers %RCLONE_CHECKERS% ^
     --log-file "%LOGFILE%" --log-level INFO
@@ -51,8 +54,11 @@ if exist "%RCLONE_CONFIG%" (
   "%RCLONE_CMD%" mkdir "%REMOTE%" >nul 2>&1
   "%RCLONE_CMD%" move "%SRCDIR%" "%REMOTE%" ^
     --min-age %UPLOAD_MIN_AGE% ^
-    --include "*/**.mkv" ^
-    --exclude "logs/**" ^
+    --filter "- /logs/**" ^
+    --filter "+ *.mkv" ^
+    --filter "+ */" ^
+    --filter "+ **/*.mkv" ^
+    --filter "- *" ^
     --retries %RCLONE_RETRIES% --low-level-retries %RCLONE_LOW_LEVEL_RETRIES% ^
     --transfers %RCLONE_TRANSFERS% --checkers %RCLONE_CHECKERS% ^
     --log-file "%LOGFILE%" --log-level INFO

@@ -5,7 +5,7 @@ REM Local storage root for recording segments.
 set OUTDIR=C:\rec
 
 REM NAS remote configured in rclone (same for all PCs).
-set REMOTE_BASE=nas:records
+set REMOTE_BASE=nas:/share/records
 
 REM Upload policy.
 set UPLOAD_MIN_AGE=3m
