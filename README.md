@@ -9,6 +9,7 @@
 
 ## 2. Что должно быть в папке проекта
 - `record.bat`, `start_record_if_after_time.bat`, `upload_move_once.bat`, `upload_move_loop.bat`, `setup_check.bat`, `config.bat`
+- `setup_tasks.bat` (автосоздание задач Планировщика)
 - `run_record_hidden.vbs`, `run_upload_hidden.vbs` (скрытый запуск без окна консоли)
 - Папка `Rclone`:
   - `Rclone\rclone.exe`
@@ -37,6 +38,18 @@
 Важно: в `config.bat` поставь:
 - `set PAUSE_ON_EXIT=0`
 - `set START_AFTER_HHMM=1700` (или нужное время в формате `HHmm`)
+
+### Быстрый вариант (рекомендуется)
+1. Открой `cmd` от имени администратора.
+2. Выполни:
+   - `cd /d D:\Рабочий стол\ScreenRec`
+   - `setup_tasks.bat`
+3. Проверка:
+   - `schtasks /Query /TN "ScreenRec_Record_OnLogon_AfterTime" /V /FO LIST`
+   - `schtasks /Query /TN "ScreenRec_Upload_Loop" /V /FO LIST`
+4. Удаление (если нужно):
+   - `schtasks /Delete /TN "ScreenRec_Record_OnLogon_AfterTime" /F`
+   - `schtasks /Delete /TN "ScreenRec_Upload_Loop" /F`
 
 ### Задача 1: запуск записи только при входе и только после нужного времени
 1. Нажми `Win + R` -> `taskschd.msc`.

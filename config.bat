@@ -8,8 +8,8 @@ REM NAS remote configured in rclone (same for all PCs).
 set REMOTE_BASE=nas:/share/records
 
 REM Upload policy.
-set UPLOAD_MIN_AGE=3m
-set UPLOAD_INTERVAL_SEC=120
+set UPLOAD_MIN_AGE=6m
+set UPLOAD_INTERVAL_SEC=300
 set START_AFTER_HHMM=1700
 set CLEAN_EMPTY_DIRS=1
 set LOG_RETENTION_DAYS=14
@@ -18,7 +18,7 @@ REM Video encoding.
 set "FFMPEG_EXE=%~dp0ffmpeg\bin\ffmpeg.exe"
 set VIDEO_FRAMERATE=15
 set DRAW_MOUSE=1
-set SEGMENT_SECONDS=60
+set SEGMENT_SECONDS=300
 set X264_PRESET=veryfast
 set VIDEO_CRF=27
 set MIN_FREE_GB=5
