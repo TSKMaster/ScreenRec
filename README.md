@@ -8,9 +8,9 @@
 - `setup_check.bat` — проверяет, что все настроено правильно.
 
 ## 2. Что должно быть в папке проекта
-- `record.bat`, `start_record_if_after_time.bat`, `upload_move_once.bat`, `upload_move_loop.bat`, `setup_check.bat`, `config.bat`
+- `record.bat`, `start_record_if_after_time.bat`, `start_record_weekend_immediate.bat`, `upload_move_once.bat`, `upload_move_loop.bat`, `setup_check.bat`, `config.bat`
 - `setup_tasks.bat` (автосоздание задач Планировщика)
-- `run_record_hidden.vbs`, `run_upload_hidden.vbs` (скрытый запуск без окна консоли)
+- `run_record_hidden.vbs`, `run_record_weekend_hidden.vbs`, `run_upload_hidden.vbs` (скрытый запуск без окна консоли)
 - Папка `Rclone`:
   - `Rclone\rclone.exe`
   - `Rclone\rclone.conf`
@@ -45,17 +45,19 @@
    - `cd /d D:\Рабочий стол\ScreenRec`
    - `setup_tasks.bat`
 3. Проверка:
-   - `schtasks /Query /TN "ScreenRec_Record_OnLogon_AfterTime" /V /FO LIST`
+   - `schtasks /Query /TN "ScreenRec_Record_Weekdays_AfterTime" /V /FO LIST`
+   - `schtasks /Query /TN "ScreenRec_Record_Weekends_Immediate" /V /FO LIST`
    - `schtasks /Query /TN "ScreenRec_Upload_Loop" /V /FO LIST`
 4. Удаление (если нужно):
-   - `schtasks /Delete /TN "ScreenRec_Record_OnLogon_AfterTime" /F`
+   - `schtasks /Delete /TN "ScreenRec_Record_Weekdays_AfterTime" /F`
+   - `schtasks /Delete /TN "ScreenRec_Record_Weekends_Immediate" /F`
    - `schtasks /Delete /TN "ScreenRec_Upload_Loop" /F`
 
-### Задача 1: запуск записи только при входе и только после нужного времени
+### Задача 1: запись в будни после времени START_AFTER_HHMM
 1. Нажми `Win + R` -> `taskschd.msc`.
 2. Выбери `Создать задачу...`.
 3. Вкладка `Общие`:
-   - Имя: `ScreenRec_Record_OnLogon_AfterTime`
+   - Имя: `ScreenRec_Record_Weekdays_AfterTime`
    - Выбери `Выполнять только для пользователя, вошедшего в систему`.
 4. Вкладка `Триггеры` -> `Создать`:
    - `При входе в систему` (для нужного пользователя).
@@ -67,7 +69,19 @@
    - `Если задача уже выполняется` -> `Не запускать новый экземпляр`.
 7. Сохрани задачу.
 
-### Задача 2: постоянная выгрузка на NAS
+### Задача 2: запись по выходным сразу при логине
+1. `Создать задачу...`
+2. Имя: `ScreenRec_Record_Weekends_Immediate`
+3. `Общие`: `Выполнять только для пользователя, вошедшего в систему`.
+4. `Триггеры`: `При входе в систему`.
+5. `Действия`:
+   - Программа: `wscript.exe`
+   - Аргументы: `"D:\Рабочий стол\ScreenRec\run_record_weekend_hidden.vbs"`
+   - Рабочая папка: `D:\Рабочий стол\ScreenRec` (опционально)
+6. `Параметры`:
+   - `Если задача уже выполняется` -> `Не запускать новый экземпляр`.
+
+### Задача 3: постоянная выгрузка на NAS
 1. `Создать задачу...`
 2. Имя: `ScreenRec_Upload_Loop`
 3. `Общие`: `Выполнять только для пользователя, вошедшего в систему`.
@@ -80,9 +94,8 @@
    - `Если задача уже выполняется` -> `Не запускать новый экземпляр`.
 
 ## 6. Как это работает после настройки
-- При входе в систему скрипт проверяет текущее время.
-- Если текущее время меньше `START_AFTER_HHMM`, запись не запускается.
-- Если время равно или больше `START_AFTER_HHMM`, запускается `record.bat`.
+- В будни при логине запись запускается только если время >= `START_AFTER_HHMM`.
+- В выходные при логине запись запускается сразу.
 - Запись идет до выключения/перезагрузки ПК или ручной остановки процесса.
 - Выгрузка на NAS работает в фоне после входа пользователя в систему.
 

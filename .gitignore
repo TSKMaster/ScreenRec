@@ -8,3 +8,6 @@ rclone-v*.zip
 
 # Runtime output
 *.log
+
+# Local helper script (not for git)
+delete_tasks.bat
